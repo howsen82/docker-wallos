@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  wallos:
+    container_name: wallos
+    image: bellamy/wallos:latest
+    ports:
+      - 80:80
+    environment:
+      - TZ=Asia/Kuching
+    # Volumes store your data between container upgrades
+    volumes:
+      - /data/wallos/db:/var/www/html/db
+      - /data/wallos/logos:/var/www/html/images/uploads/logos
+    restart: unless-stopped
+    healthcheck:
+      test: curl -f http://localhost:80/ || exit 1
